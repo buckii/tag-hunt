@@ -3,7 +3,6 @@ import { onMount } from 'svelte';
 import Pusher from 'pusher-js';
 import { PUBLIC_PUSHER_KEY, PUBLIC_PUSHER_CHANNEL, PUBLIC_PUSHER_EVENT } from "$env/static/public";
 import axios from 'axios';
-import VoteChart from '../../components/VoteChart.svelte';
 
 let pusher;
 let pusher_channel;
