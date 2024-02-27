@@ -10,6 +10,7 @@ let pusher_channel;
 
 let tag_number = null;
 let opt_out = false;
+let opted_out = false;
 let tags_tapped = [];
 let tag_count = 0;
 let total_tags_count = 90;
@@ -53,7 +54,6 @@ console.log('onMount');
     
     // set tag number
     tag_number = parseInt(atob(decodeURIComponent(hash_array[0]))) || 0;
-    console.log({hash_array,tag_number});
     tag_arg = hash_array.length > 1 ? atob(decodeURIComponent(hash_array[1])) : '';
 
     // get tag
@@ -111,6 +111,9 @@ function store() {
     axios.post('/user', data)
     .then(function (response) {
         console.log('saved successfully');
+        if(opt_out) {
+            opted_out = true;
+        }
         addCurrentTag();
         localStorage.setItem('tags_tapped', JSON.stringify(tags_tapped));
     })
@@ -187,6 +190,19 @@ function handleSubmitFirst() {
     <p><a class="button" href={tag.cta_url} target="_blank">{tag.cta_text}</a></p>
     {:else}
     <p><a class="button" href={tag.website_url} target="_blank">Visit our Website</a></p>
+
+    {#if opted_out}
+    You have opted out of communication from {tag.name}.
+    {:else}
+    <label for="optout" class="optout-label">
+        <input type="checkbox" id="optout" bind:value={opt_out} />
+        Check then click below to opt out of sharing your information with this organization.
+    </label>
+    {#if opt_out}
+    <p><button on:click={store} class="simple">Confirm opt out</button></p>
+    {/if}
+    {/if}
+
     {/if}
 {/if}
 

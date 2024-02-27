@@ -149,7 +149,6 @@ export async function getTag(tag_number) {
        + "FROM tags "
        + "WHERE id=" + tag_number + " AND is_active=1;")
       .then(function ([rows, fields]) {
-        console.log(rows);
         if(rows.length) {
           tag = rows[0];
         } else {
