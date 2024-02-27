@@ -1,0 +1,259 @@
+@import url(https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,700italic,300,400,700);
+body {
+    font-family: 'Open Sans', sans-serif;
+    text-align: center;
+    box-sizing: border-box;
+    line-height: 1.5em;
+    margin: 0;
+    background: url('/bg.jpg') no-repeat;
+    background-size: cover;
+    background-attachment: fixed;
+    color: #fff;
+}
+* {
+    box-sizing: border-box;
+}
+h1 {
+    font-size: 2em;
+    text-transform: uppercase;
+    letter-spacing: 4px;
+    line-height: 1.5em;
+    margin-left: 15px;
+    margin-top: 0;
+}
+h1 strong {
+    color: #3D8BFF;
+}
+div.container {
+    max-width: 400px;
+    margin: 0 auto;
+    padding: 20px;
+    background: #3339;
+}
+h3.hint {
+    font-size: 1.2em;
+    margin: 20px auto 0;
+    text-align: center;
+}
+.hint-container {
+    background: #000c;
+    padding: 10px;
+    border-radius: 8px;
+    font-style: italic;
+}
+
+input {
+    background: #fff;
+    border: 1px solid #666;
+    border-radius: 4px;
+    font-size: 20px;
+    padding: 16px;
+    width: 100%;
+}
+
+.test-tag-list li {
+    list-style: none none;
+    display: inline-block;
+    margin: 15px;
+}
+.test-tag-list a {
+    color: #fff;
+}
+
+a.button,
+button {
+    display: block;
+    width: 100%;
+    border-radius: 30px;
+    padding: 12px 30px;
+    margin: 10px 0;
+    width: 100%;
+    background: #DF0C2B;
+    color: #fff;
+    border: none;
+    font-size: 1.2em;
+    text-decoration: none;
+}
+button.simple {
+    background: none;
+    color: #999;
+    text-decoration: underline;
+}
+
+a {
+    color: #fff;
+}
+
+label {
+    font-size: .9em;
+    color: #999;
+}
+
+.winner {
+    font-weight: bold;
+    font-size: 1.2em;
+}
+
+td {
+    text-align: left;
+}
+
+.flex {
+    display: flex;
+}
+.flex > div {
+    flex: 1;
+}
+
+header,
+.leaderboard-container {
+    max-width: 1200px;
+    margin: 30px auto;
+}
+
+header > div,
+.leaderboard-container > div {
+    background: #6663;
+    backdrop-filter: blur(10px);
+    margin: 0 15px;
+    padding: 0 0 15px;
+    border-radius: 0 0 5px 5px;
+}
+
+header > div {
+    border-radius: 5px 5px 0 0;
+    padding: 15px;
+    display: flex;
+}
+
+header {
+    text-align: left;
+}
+
+header ul {
+    display: flex;
+    justify-content: space-between;
+    text-transform: uppercase;
+    font-size: 1.5em;
+    margin-left: 15px;
+    padding-left: 0;
+}
+header li {
+    list-style: none none;
+}
+
+.leaderboard-container ul li {
+    display: flex;
+    text-align: left;
+    background: #333c;
+}
+
+.leaderboard-container .label {
+    flex: 1;
+}
+
+.participant-name {
+    font-weight: bold;
+}
+.org-name {
+    font-style: italic;
+    color: #fffc;
+}
+
+.leaderboard-container .score {
+    padding: 0 15px;
+}
+
+.leaderboard-container > div ul li:before {
+    display: none;
+    border-radius: 50%;
+    width: 24px;
+    height: 24px;
+    text-align: center;
+    margin-left: -30px;
+    margin-right: 10px;
+}
+.leaderboard-container > div ul li:nth-child(1) {
+    background: #CA09;
+}
+.leaderboard-container > div ul li:nth-child(1):before {
+    content: '1';
+    display: inline-block;
+    background: #CA0;
+}
+.leaderboard-container > div ul li:nth-child(2) {
+    background: #BBB9;
+}
+.leaderboard-container > div ul li:nth-child(2):before {
+    content: '2';
+    display: inline-block;
+    background: #BBB;
+}
+.leaderboard-container > div ul li:nth-child(3) {
+    background: #C609;
+}
+.leaderboard-container > div ul li:nth-child(3):before {
+    content: '3';
+    display: inline-block;
+    background: #C60;
+}
+
+.leaderboard-container > div > h3 {
+    background: #9994;
+    margin: 0 0 15px;
+    padding: 15px 0;
+}
+
+.center {
+    text-align: center;
+}
+
+ul.leaderboard-list {
+    width: 80%;
+    margin: 0 auto;
+    padding: 0;
+    border-spacing: 0;
+}
+ul.leaderboard-list li {
+    padding: 7px;
+    margin: 10px 0;
+    padding-left: 60px;
+    border-radius: 5px;
+}
+
+.found-it {
+    margin: 0 auto;
+    width: 100px;
+    height: 100px;
+    animation: zoom-in-zoom-out 2s ease 3;
+}
+
+.powered-by {
+    width: 300px;
+    margin: 15px auto 0;
+    backdrop-filter: blur(10px);
+    background: #9993;
+    border-radius: 5px;
+    padding: 3px 5px;
+}
+
+@keyframes zoom-in-zoom-out {
+  0% {
+    transform: scale(1, 1);
+  }
+  50% {
+    transform: scale(2, 2);
+  }
+  100% {
+    transform: scale(1, 1);
+  }
+}
+
+@media print {
+  body {
+    background: #fff;
+  }
+  footer {
+    display: none;
+  }
+}
