@@ -62,7 +62,7 @@ console.log('onMount');
         total_tags_count = response.data.total_tags_count;
     });
 
-    if(tag_number > 1 && name) {
+    if(tag_number > 0 && name) {
         store();
     }
 
@@ -174,12 +174,6 @@ function handleSubmitFirst() {
     <button on:click={handleSubmitFirst}>Start My Adventure</button>
 {/if}
 
-{:else if tag_number === 1}
-    {#if tags_tapped.length && name }
-        <h2>It's great to meet you, {name}.</h2>
-        
-        <p>You're on a journey to discover some ways NFC tags and web technology can effectively engage and serve your customers!</p>
-    {/if}
 {:else if tag_number && tag}
     <h2>You found tag #{tag_number}!</h2>
     <h3>{tag.name}</h3>
