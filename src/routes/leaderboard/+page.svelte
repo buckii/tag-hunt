@@ -11,6 +11,7 @@ Pusher.logToConsole = true;
 let leaderboard;
 
 function refreshLeaderboard() {
+  let hunt = document.location.search.replace(/^\?hunt=(.*)&.+/,'$1') || document.location.host;
   axios.get('/leaderboard-data').then((response) => {
     leaderboard = response.data;
   });

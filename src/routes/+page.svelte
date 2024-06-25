@@ -17,9 +17,12 @@ let total_tags_count = 90;
 let tag_arg = '';
 let testing = false;
 let loaded = false;
+let current_fact = 0;
 
 let tags = [];
 let tag = null;
+
+let hunt = null;
 
 // Tag 1 - Participant Info
 let name = '';
@@ -39,6 +42,7 @@ console.log('onMount');
     //pull from local storage
     testing = localStorage.getItem('testing') || false;
     name = localStorage.getItem('name') || '';
+    hunt = localStorage.getItem('hunt') || '';
     organization = localStorage.getItem('organization') || '';
     email = localStorage.getItem('email') || '';
     let tags_tapped_string = localStorage.getItem('tags_tapped');
@@ -46,7 +50,8 @@ console.log('onMount');
 
     console.log(['tapped',tags_tapped]);
 
-    let hash_array = document.location.search.replace(/^\?/,'').split('/');
+    hunt = document.location.search.replace(/^\?hunt=(.*)&.+/,'$1') || document.location.host;
+    let hash_array = document.location.search.replace(/^\?(hunt=.*&)?/,'').split('/');
 
     // testing mode when #test is in the URL
     testing = document.location.hash.match(/^#test/);// || testing;
@@ -78,6 +83,14 @@ console.log('onMount');
     });
 });
 
+function previousFact() {
+    current_fact--;
+}
+
+function nextFact() {
+    current_fact++;
+}
+
 function addCurrentTag() {
     console.log('Checking if tag number ' + tag_number + ' has been tapped');
     if(!tags_tapped.includes(tag_number) && tag_number > 0) {
@@ -88,6 +101,7 @@ function addCurrentTag() {
 
 function store() {
     localStorage.setItem('testing', testing);
+    localStorage.setItem('hunt', hunt);
     localStorage.setItem('name', name);
     localStorage.setItem('organization', organization);
     localStorage.setItem('email', email);
@@ -100,6 +114,7 @@ function store() {
     localStorage.setItem('tags_tapped', JSON.stringify(tags_tapped));
 
     let data = {
+        hunt,
         name,
         organization,
         email,
@@ -175,14 +190,30 @@ function handleSubmitFirst() {
 {/if}
 
 {:else if tag_number && tag}
-    <h2>You found tag #{tag_number}!</h2>
-    <h3>{tag.name}</h3>
+    <h2>You found {tag.name}!</h2>
     {#if tag.description}
     <p>{@html tag.description}</p>
     {/if}
+    {#if tag.facts}
+        {#each tag.facts as fact, i}
+            {#if current_fact == i}
+            <p style="min-height: 150px;"><strong>{fact.question_text}</strong><br>
+                {fact.excerpt}
+            </p>
+            {/if}
+        {/each}
+        <p style="display: flex;justify-content: space-between;">
+        {#if current_fact > 0}
+        <span on:click={previousFact}>&laquo; Previous</span>
+        {/if}
+        {#if current_fact < tag.facts.length}
+        <span on:click={nextFact}>Next &raquo;</span>
+        {/if}
+        </p>
+    {/if}
     {#if tag.cta_url}
     <p><a class="button" href={tag.cta_url} target="_blank">{tag.cta_text}</a></p>
-    {:else}
+    {:else if tag.website_url}
     <p><a class="button" href={tag.website_url} target="_blank">Visit our Website</a></p>
 
     {#if opted_out}

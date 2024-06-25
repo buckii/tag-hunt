@@ -5,7 +5,8 @@ body {
     box-sizing: border-box;
     line-height: 1.5em;
     margin: 0;
-    background: url('/bg.jpg') no-repeat;
+    /*background: url('/bg.jpg') no-repeat;*/
+    background: #222;
     background-size: cover;
     background-attachment: fixed;
     color: #fff;
