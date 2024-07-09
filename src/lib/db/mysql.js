@@ -192,7 +192,8 @@ export async function getTag(tag_number) {
     await mysqlconn
       .query("SELECT count(*) as tag_count "
        + "FROM tags "
-       + "WHERE is_active=1;")
+       + "WHERE is_active=1 "
+       + "AND hunt_id=" + tag.hunt_id)
       .then(function ([rows, fields]) {
         if(rows.length) {
           total_tags_count = rows[0].tag_count;
