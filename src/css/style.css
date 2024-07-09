@@ -26,7 +26,7 @@ h1 strong {
     color: #3D8BFF;
 }
 div.container {
-    max-width: 400px;
+    max-width: 500px;
     margin: 0 auto;
     padding: 20px;
     background: #3339;
@@ -267,4 +267,50 @@ ul.leaderboard-list li {
   footer {
     display: none;
   }
+}
+
+body {
+    background: #FCDE18;
+}
+div.container {
+    background: none;
+}
+div.wrapper {
+    margin-top: 30px;
+    background: #fff;
+    color: #000;
+}
+div.wrapper:before,
+div.wrapper:after {
+    display: block;
+    content: '';
+    height: 135px;
+    width: 100%;
+    background: url('/top.png') no-repeat center center;
+    background-size: cover;
+    margin-bottom: -40px;
+}
+div.wrapper:after {
+    background-image: url('/bottom.png');
+    margin-bottom: 0;
+    margin-top: -40px;
+}
+footer {
+    color: #000;
+}
+footer .logos {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    margin: 20px 0;
+}
+footer a {
+    width: 36%;
+    margin: 0 5%;
+}
+.powered-by {
+    color: #000;
+    background: none;
+    width: 50%;
+    margin: 10px -10%;
 }

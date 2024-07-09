@@ -150,6 +150,7 @@ function handleSubmitFirst() {
 }
 </script>
 
+<div class="wrapper">
 <div class="container">
 {#if loaded}
 <Taglist tag_count={tags_tapped.length} total_tags_count={total_tags_count}></Taglist>
@@ -245,4 +246,5 @@ function handleSubmitFirst() {
 </div>
 {/if}
 {/if}
+</div>
 </div>
