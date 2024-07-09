@@ -205,8 +205,10 @@ function handleSubmitFirst() {
         <p style="display: flex;justify-content: space-between;">
         {#if current_fact > 0}
         <span on:click={previousFact}>&laquo; Previous</span>
+        {:else}
+        <span></span>
         {/if}
-        {#if current_fact < tag.facts.length}
+        {#if current_fact < tag.facts.length - 1}
         <span on:click={nextFact}>Next &raquo;</span>
         {/if}
         </p>
