@@ -37,9 +37,10 @@ h3.hint {
     text-align: center;
 }
 .hint-container {
-    background: #000c;
+    background: none;
     padding: 10px;
     border-radius: 8px;
+    border: 3px solid #FCDE18;
     font-style: italic;
 }
 
@@ -69,13 +70,14 @@ a.button,
 button {
     display: block;
     width: 100%;
-    border-radius: 30px;
-    padding: 12px 30px;
+    border-radius: 8px;
+    padding: 18px 30px;
     margin: 10px 0;
     width: 100%;
-    background: #DF0C2B;
-    color: #fff;
+    background: #14ABE1;
+    color: #000;
     border: none;
+    font-family: 'Open Sans', sans-serif;
     font-size: 1.2em;
     text-decoration: none;
 }
@@ -274,6 +276,9 @@ body {
 }
 div.container {
     background: none;
+    margin-bottom: 30px;
+    position: relative;
+    z-index: 9;
 }
 div.wrapper {
     margin-top: 30px;
@@ -288,12 +293,12 @@ div.wrapper:after {
     width: 100%;
     background: url('/top.png') no-repeat center center;
     background-size: cover;
-    margin-bottom: -40px;
+    margin-bottom: -80px;
 }
 div.wrapper:after {
     background-image: url('/bottom.png');
     margin-bottom: 0;
-    margin-top: -40px;
+    margin-top: -80px;
 }
 footer {
     color: #000;

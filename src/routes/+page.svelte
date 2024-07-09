@@ -158,7 +158,7 @@ function handleSubmitFirst() {
 <p><img src="/nfc-found.svg" alt="You found it!" class="found-it" /></p>
 
 {#if tag_number === 0 || !tags_tapped.length}
-<p>Welcome to the Multi-Chamber Expo booth hunt!</p>
+<p>Welcome to the Columbus Book Festival <strong>Discovery Quest</strong>!</p>
 <div style="text-align: left">
 <h3 class="hint">Instructions:</h3>
 <div class="hint-container">
@@ -173,21 +173,22 @@ function handleSubmitFirst() {
 </div>
 
 {#if !tags_tapped.length || !name}
-    <h1>You found a tag!</h1>
-    <p>Would you share with us a little about yourself?</p>
+    <p style="text-align: center;">Tap the NFC tag at each booth to learn about our supporters and get a hint for the next booth.</p>
+    <p style="text-align: center;font-weight: bold">Visit 6 booths and stop at Columbus Library Metropolitan Foundation's booth for a free library prize. Visit all and be entered to win a Grand Prize!</p>
+    <p>Enter your info below and start your quest!</p>
     <p>
-        <label for="name">Your Name</label>
-        <input type="text" id="name" bind:value={name} placeholder="Your Name" />
+        <label for="name">First Name</label>
+        <input type="text" id="name" bind:value={name} placeholder="First Name" />
     </p>
-    <p>
+    <p style="display: none;">
         <label for="organization">Your Company / Organization</label>
         <input type="text" id="organization" bind:value={organization} placeholder="Your Company / Organization" />
     </p>
     <p>
-        <label for="email">Your Email Address</label>
-        <input type="email" id="email" bind:value={email} placeholder="Your Email Address" />
+        <label for="email">Email</label>
+        <input type="email" id="email" bind:value={email} placeholder="Email" />
     </p>
-    <button on:click={handleSubmitFirst}>Start My Adventure</button>
+    <button on:click={handleSubmitFirst}>Start My Quest!</button>
 {/if}
 
 {:else if tag_number && tag}

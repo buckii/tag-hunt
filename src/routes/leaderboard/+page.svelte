@@ -40,12 +40,7 @@ onMount(() => {
       <img src="/nfc-logo.png" />
     </div>
     <div class="heading">
-      <h1>Multi-Chamber Business Expo & <br>Business After hours <strong>Leaderboard</strong></h1>
-      <ul>
-        <li>New Albany</li>
-        <li>Johnstown</li>
-        <li>Pataskala</li>
-      </ul>
+      <h1>Discovery Quest at the Columbus Book Festival <strong>Leaderboard</strong></h1>
     </div>
   </div>
 </header>
