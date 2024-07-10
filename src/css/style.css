@@ -281,7 +281,8 @@ div.container {
     z-index: 9;
 }
 div.wrapper {
-    margin-top: 30px;
+    max-width: 400px;
+    margin: 30px auto 0;
     background: #fff;
     color: #000;
 }
@@ -302,6 +303,8 @@ div.wrapper:after {
 }
 footer {
     color: #000;
+    max-width: 400px;
+    margin: 0 auto;
 }
 footer .logos {
     display: flex;
