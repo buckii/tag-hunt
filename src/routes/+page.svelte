@@ -50,7 +50,7 @@ console.log('onMount');
 
     console.log(['tapped',tags_tapped]);
 
-    hunt = document.location.search.replace(/^\?hunt=(.*)&.+/,'$1') || document.location.host;
+    hunt = /hunt=/.test(document.location.search) ? document.location.search.replace(/^\?hunt=(.*)&.+/,'$1') : document.location.hostname;
     let hash_array = document.location.search.replace(/^\?(hunt=.*&)?/,'').split('/');
 
     // testing mode when #test is in the URL
