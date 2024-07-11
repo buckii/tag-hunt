@@ -1,26 +1,28 @@
 <script>
-import { onMount } from 'svelte';
-import Pusher from 'pusher-js';
-import { PUBLIC_PUSHER_KEY, PUBLIC_PUSHER_CHANNEL, PUBLIC_PUSHER_EVENT } from "$env/static/public";
+import { PUBLIC_PUSHER_CHANNEL, PUBLIC_PUSHER_EVENT, PUBLIC_PUSHER_KEY } from "$env/static/public";
 import axios from 'axios';
-import Taglist from '../components/Taglist.svelte';
+import Pusher from 'pusher-js';
+import { onMount } from 'svelte';
+import Taglist from '../../../components/Taglist.svelte';
+
+export let data;
 
 let pusher;
 let pusher_channel;
 
-let tag_number = null;
+let tag_number;
 let opt_out = false;
 let opted_out = false;
 let tags_tapped = [];
 let tag_count = 0;
-let total_tags_count = 90;
+let total_tags_count;
 let tag_arg = '';
 let testing = false;
 let loaded = false;
 let current_fact = 0;
 
 let tags = [];
-let tag = null;
+let tag;
 
 let hunt = null;
 
@@ -38,6 +40,10 @@ Pusher.logToConsole = true;
 
 onMount(() => {
 console.log('onMount');
+
+    tag = data.tag;
+    total_tags_count = data.total_tags_count;
+    tag_number = data.tag_number;
 
     //pull from local storage
     testing = localStorage.getItem('testing') || false;
@@ -58,14 +64,8 @@ console.log('onMount');
     //if(document.location.hash.match(/^#notest/)) testing = false;
     
     // set tag number
-    tag_number = parseInt(atob(decodeURIComponent(hash_array[0]))) || 0;
     tag_arg = hash_array.length > 1 ? atob(decodeURIComponent(hash_array[1])) : '';
-
-    // get tag
-    axios.get('/api/tags/' + tag_number).then((response) => {
-        tag = response.data.tag;
-        total_tags_count = response.data.total_tags_count;
-    });
+    console.log({tag,total_tags_count});
 
     if(tag_number > 0 && name) {
         store();

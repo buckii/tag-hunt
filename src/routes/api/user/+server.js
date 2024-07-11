@@ -1,6 +1,6 @@
-import { json } from '@sveltejs/kit';
+import { getAllUsers, storeInDB } from "$lib/db/mysql";
 import { message } from '$lib/pusher';
-import { storeInDB, getAllUsers } from "$lib/db/mysql";
+import { json } from '@sveltejs/kit';
 
 export async function POST({ request }) {
     const data = await request.json();
