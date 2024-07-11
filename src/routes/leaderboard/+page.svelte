@@ -12,7 +12,7 @@ let leaderboard;
 
 function refreshLeaderboard() {
   let hunt = document.location.search.replace(/^\?hunt=(.*)&.+/,'$1') || document.location.host;
-  axios.get('/leaderboard-data').then((response) => {
+  axios.get('/api/leaderboard').then((response) => {
     leaderboard = response.data;
   });
 }

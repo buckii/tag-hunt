@@ -62,7 +62,7 @@ console.log('onMount');
     tag_arg = hash_array.length > 1 ? atob(decodeURIComponent(hash_array[1])) : '';
 
     // get tag
-    axios.get('/tags/' + tag_number).then((response) => {
+    axios.get('/api/tags/' + tag_number).then((response) => {
         tag = response.data.tag;
         total_tags_count = response.data.total_tags_count;
     });
@@ -123,7 +123,7 @@ function store() {
         opt_out,
     };
     //let data_string = JSON.stringify(data);
-    axios.post('/user', data)
+    axios.post('/api/user', data)
     .then(function (response) {
         console.log('saved successfully');
         if(opt_out) {

@@ -11,7 +11,7 @@ Pusher.logToConsole = true;
 let users;
 
 function refreshUsers() {
-  axios.get('/user').then((response) => {
+  axios.get('/api/user').then((response) => {
     users = response.data;
   });
 }

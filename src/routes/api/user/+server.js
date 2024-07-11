@@ -4,7 +4,7 @@ import { storeInDB, getAllUsers } from "$lib/db/mysql";
 
 export async function POST({ request }) {
     const data = await request.json();
-    
+
     // store in db
     let result = await storeInDB(data);
 

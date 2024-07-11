@@ -5,7 +5,7 @@ import axios from 'axios';
 let tags;
 
 function refreshTags() {
-  axios.get('/tags').then((response) => {
+  axios.get('/api/tags').then((response) => {
     tags = response.data.tags;
   });
 }
