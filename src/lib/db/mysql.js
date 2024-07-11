@@ -1,6 +1,7 @@
-import { DB_HOST, DB_USER, DB_PASSWORD, DB_NAME } from "$env/static/private";
+import { DB_HOST, DB_NAME, DB_PASSWORD, DB_USER } from "$env/static/private";
 
 import mysql from "mysql2/promise";
+import { fillTag } from "../tag_helper.js";
 
 export function mysqlconnFn() {
   //always create a new connection to avoid closed connections
@@ -177,6 +178,10 @@ export async function getTags(hunt_name) {
     console.log(error);
   }
   mysqlconn.end();
+
+  //populate URL in tags
+  fillTag(tags);
+
   return {
     tags,
   };
@@ -226,6 +231,10 @@ export async function getTag(tag_number) {
     console.log(error);
   }
   mysqlconn.end();
+
+  //populate URL in tags
+  fillTag(tag);
+
   return {
     tag,
     total_tags_count,

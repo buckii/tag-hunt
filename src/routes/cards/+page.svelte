@@ -18,23 +18,21 @@ onMount(() => {
 <style>
 .cards {
   padding: 0;
-  margin: 0;
+  margin: 0 auto;
+  max-width: 400px;
 }
 li.card {
   position: relative;
   list-style: none none;
   page-break-before: always;
-  width: 100vw;
-  height: 70vh;
+  padding: 30px 0;
 }
 .powered-by-link {
+  display: none;
   color: #000;
 }
 .qr img {
-  width: 50px;
-}
-.powered-by-link {
-
+  width: 100px;
 }
 .powered-by-link img {
   width: 200px;
@@ -46,12 +44,6 @@ li.card {
   justify-content: space-between;
   align-items: center;
   padding: 0 20px;
-  font-size: .5em;
-}
-.tap {
-  display: block;
-  margin: 50px auto 20px;
-  width: 40px;
 }
 </style>
 
@@ -59,15 +51,15 @@ li.card {
   {#if tags}
   {#each tags as tag}
   <li class="card">
-    <img class="tap" src="tap.png" alt="tap NFC" />
     <div class="footer">
       <div class="qr">
-        <img alt="QR code" src={'https://chart.googleapis.com/chart?chs=200x200&cht=qr&chl=' + encodeURIComponent('https://tag.buckii.com/?' + btoa(tag.id))} />
+        <img alt="QR code" src={'https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=' + window.location.protocol + ':/' + window.location.host + '/' + tag.url} />
       </div>
+      <div class="tag-name"><a href="{tag.url}">{tag.name}</a></div>
+      <div class="tag-id">{tag.id}</div>
       <div class="powered-by-link">
         <a href="https://www.buckeyeinnovation.com/" target="_blank"><img src="/powered-by-buckii-dark.svg" alt="Powered by Buckeye Innovation" /></a>
       </div>
-      <div class="tag-id">{tag.id}</div>
     </div>
   </li>
   {/each}
