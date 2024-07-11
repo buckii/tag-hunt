@@ -28,6 +28,17 @@ async function lookupHunt(hunt_name) {
         }
       });
 
+    if(!hunt) {
+    await mysqlconn
+      .query("SELECT * FROM hunts ORDER BY id DESC LIMIT 1;")
+      .then(function ([rows, fields]) {
+        if(rows && rows.length) {
+          hunt = rows[0];
+        }
+      });
+
+    }
+
     mysqlconn.end();
 
     return hunt;
@@ -153,9 +164,10 @@ export async function getTags(hunt_name) {
 
   try {
     await mysqlconn
-      .query("SELECT * "
-       + "FROM tags "
-       + "WHERE hunt_id=" + hunt.id + " "
+      .query("SELECT t.*,next.hint as hint_next "
+       + "FROM tags AS t "
+       + "LEFT JOIN tags AS next ON next.id = t.id + 1 AND t.hunt_id = next.hunt_id "
+       + "WHERE t.hunt_id=" + hunt.id + " "
        + "ORDER BY id;")
       .then(function ([rows, fields]) {
         tags = rows;
@@ -179,9 +191,10 @@ export async function getTag(tag_number) {
 
   try {
     await mysqlconn
-      .query("SELECT * "
-       + "FROM tags "
-       + "WHERE id=" + tag_number + " AND is_active=1;")
+      .query("SELECT t.*,next.hint as hint_next "
+       + "FROM tags AS t "
+       + "LEFT JOIN tags AS next ON next.id = t.id + 1 AND t.hunt_id = next.hunt_id "
+       + "WHERE t.id=" + tag_number + " AND t.is_active=1;")
       .then(function ([rows, fields]) {
         if(rows.length) {
           tag = rows[0];

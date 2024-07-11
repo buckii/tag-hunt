@@ -195,6 +195,8 @@ function handleSubmitFirst() {
     <h2>You found {tag.name}!</h2>
     {#if tag.description}
     <p>{@html tag.description}</p>
+    {:else}
+    <p>{tag.hint}</p>
     {/if}
     {#if tag.facts}
         {#each tag.facts as fact, i}
@@ -219,6 +221,16 @@ function handleSubmitFirst() {
     <p><a class="button" href={tag.cta_url} target="_blank">{tag.cta_text}</a></p>
     {:else if tag.website_url}
     <p><a class="button" href={tag.website_url} target="_blank">Visit our Website</a></p>
+    {/if}
+
+    {#if tag.hint_next}
+    <div style="text-align: left">
+        <h3 class="hint">Next Hint:</h3>
+        <div class="hint-container">
+            {tag.hint_next}
+        </div>
+    </div>
+    {/if}
 
     {#if opted_out}
     You have opted out of communication from {tag.name}.
@@ -227,12 +239,11 @@ function handleSubmitFirst() {
         <input type="checkbox" id="optout" bind:value={opt_out} />
         Check then click below to opt out of sharing your information with this organization.
     </label>
-    {#if opt_out}
-    <p><button on:click={store} class="simple">Confirm opt out</button></p>
-    {/if}
+        {#if opt_out}
+        <p><button on:click={store} class="simple">Confirm opt out</button></p>
+        {/if}
     {/if}
 
-    {/if}
 {/if}
 
 {#if testing}
