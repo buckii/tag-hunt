@@ -21,13 +21,23 @@ async function lookupHunt(hunt_name) {
   let hunt;
 
   try {
-    await mysqlconn
-      .query("SELECT * FROM hunts where short_name='" + hunt_name + "' OR domain='" + hunt_name + "';")
-      .then(function ([rows, fields]) {
-        if(rows && rows.length) {
-          hunt = rows[0];
-        }
-      });
+    if(/^\d+$/.test(hunt_name)) {
+      await mysqlconn
+        .query("SELECT * FROM hunts where id='" + hunt_name + ";")
+        .then(function ([rows, fields]) {
+          if(rows && rows.length) {
+            hunt = rows[0];
+          }
+        });
+    } else {
+      await mysqlconn
+        .query("SELECT * FROM hunts where short_name='" + hunt_name + "' OR domain='" + hunt_name + "';")
+        .then(function ([rows, fields]) {
+          if(rows && rows.length) {
+            hunt = rows[0];
+          }
+        });
+    }
 
     if(!hunt) {
     await mysqlconn
