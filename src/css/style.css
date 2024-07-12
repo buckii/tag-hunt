@@ -107,6 +107,14 @@ label {
     font-size: 1.2em;
 }
 
+.inner {
+    color: #000;
+}
+
+.wrapper a {
+    color: #000;
+}
+
 td {
     text-align: left;
 }
@@ -271,8 +279,13 @@ ul.leaderboard-list li {
   }
 }
 
-body {
+main, footer {
     background: #FCDE18;
+    padding: 30px 0 0;
+}
+main:contains(div.plain),
+footer:contains(div.plain) {
+    background: #FFF !important;
 }
 div.container {
     background: none;
@@ -282,7 +295,7 @@ div.container {
 }
 div.wrapper {
     max-width: 400px;
-    margin: 30px auto 0;
+    margin: 0 auto;
     background: #fff;
     color: #000;
 }
@@ -301,10 +314,15 @@ div.wrapper:after {
     margin-bottom: 0;
     margin-top: -80px;
 }
-footer {
+div.wrapper > .inner {
+    min-height: 200px;
+    padding: 50px 0 70px;
+}
+footer .inner {
     color: #000;
     max-width: 400px;
     margin: 0 auto;
+    padding-bottom: 50px;
 }
 footer .logos {
     display: flex;
