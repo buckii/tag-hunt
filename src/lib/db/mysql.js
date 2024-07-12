@@ -20,10 +20,15 @@ async function lookupHunt(hunt_name) {
   let mysqlconn = await mysqlconnFn();
   let hunt;
 
+  // if a hunt object is passed in, just use the object
+  if(typeof(hunt) == 'object') {
+    return hunt;
+  }
+
   try {
     if(/^\d+$/.test(hunt_name)) {
       await mysqlconn
-        .query("SELECT * FROM hunts where id='" + hunt_name + ";")
+        .query("SELECT * FROM hunts where id=" + hunt_name + ";")
         .then(function ([rows, fields]) {
           if(rows && rows.length) {
             hunt = rows[0];
@@ -230,6 +235,32 @@ export async function castVote(user, vote_id, option_value) {
   }
 }
 
+export async function getVoteCounts(vote_id) {
+  let mysqlconn = await mysqlconnFn();
+  let results = {};
+
+  try {
+    await mysqlconn
+      .query("SELECT value,count(*) as vote_count "
+        + "FROM user_votes uv "
+        + "WHERE LENGTH(value)>0 AND vote_id = " + vote_id + " "
+        + "GROUP BY value "
+        + "ORDER BY value;")
+      .then(function ([rows, fields]) {
+        results.values = rows;
+      })
+      .then( () => mysqlconn.end());
+
+      // get the votes
+      results.vote = await getVote(vote_id);
+
+  } catch (error) {
+    console.error("Got an error!!!");
+    console.log(error);
+  }
+  return results;
+}
+
 export async function getAllUsers(hunt_name) {
   let mysqlconn = await mysqlconnFn();
   let results;
@@ -385,9 +416,7 @@ export async function getVote(vote_number) {
   }
   mysqlconn.end();
 
-  return {
-    vote,
-  };
+  return vote;
 }
 
 export async function getLeaderboard(hunt_name) {

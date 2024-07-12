@@ -11,14 +11,12 @@ let pusher_channel;
 let leaderboard;
 
 function refreshLeaderboard() {
-  let hunt = document.location.search.replace(/^\?hunt=(.*)&.+/,'$1') || document.location.host;
   axios.get('/api/leaderboard').then((response) => {
     leaderboard = response.data;
   });
 }
 
 onMount(() => {
-  console.log('mounting');
   document.body.classList.add('leaderboard');
   pusher = new Pusher(PUBLIC_PUSHER_KEY, {
     cluster: 'us2'
@@ -29,7 +27,6 @@ onMount(() => {
     refreshLeaderboard();
   });
 
-  console.log('refreshing data and leaderboard');
   refreshLeaderboard();
 });
 </script>
@@ -68,7 +65,10 @@ onMount(() => {
     {#if leaderboard}
     {#each leaderboard.leaders as lead}
     <li>
-      <div class="label"><span class="participant-name">{lead.name.split(' ')[0]}</span> | <span class="org-name">{lead.organization}</span></div>
+      <div class="label">
+        <span class="participant-name">{lead.name.split(' ')[0]}</span>
+        {#if lead.organization} | <span class="org-name">{lead.organization}</span>{/if}
+      </div>
       <div class="score">{lead.tag_count} tap{lead.tag_count == 1 ? '' : 's'}</div>
     </li>
     {/each}

@@ -11,8 +11,7 @@ export async function load({ params }) {
             return {error: 'Invalid vote.'};
         }
         let vote_number = parseInt(vote_decoded);
-        let vote_data = await getVote(vote_number);
-        let vote = vote_data?.vote;
+        let vote = await getVote(vote_number);
         
         let option = atob(decodeURIComponent(params.option_token));
         let valid_options = JSON.parse(vote.vote_options);
