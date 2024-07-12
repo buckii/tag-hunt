@@ -12,7 +12,7 @@ export async function load({ params, url }) {
         }
         let vote_number = parseInt(vote_decoded);
         let vote_data = await getVotes(url.host);
-        let vote = vote_data?.votes;
+        let vote = vote_data?.votes[0];
 
 		return {
             vote,
