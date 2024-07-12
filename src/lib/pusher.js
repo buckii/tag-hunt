@@ -1,5 +1,5 @@
 import { PUSHER_APP_ID, PUSHER_SECRET } from "$env/static/private";
-import { PUBLIC_PUSHER_KEY, PUBLIC_PUSHER_CHANNEL, PUBLIC_PUSHER_EVENT } from "$env/static/public";
+import { PUBLIC_PUSHER_CHANNEL, PUBLIC_PUSHER_KEY } from "$env/static/public";
 import Pusher from 'pusher';
 
 export async function message( event, data ) {

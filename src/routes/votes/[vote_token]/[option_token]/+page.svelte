@@ -27,7 +27,6 @@ onMount(() => {
     vote_token = data.vote_token;
     option_token = data.option_token;
 
-    //console.log(window.localStorage);
     name = localStorage.getItem('name') || '';
     organization = localStorage.getItem('organization') || '';
     email = localStorage.getItem('email') || '';
@@ -38,15 +37,13 @@ onMount(() => {
         castVote();
     }
 
-    console.log({vote,option});
-
     pusher = new Pusher(PUBLIC_PUSHER_KEY, {
       cluster: 'us2'
     });
 
     pusher_channel = pusher.subscribe(PUBLIC_PUSHER_CHANNEL);
     pusher_channel.bind(PUBLIC_PUSHER_EVENT, function(data) {
-      console.log(JSON.stringify(data));
+      //console.log(JSON.stringify(data));
     });
 });
 
@@ -68,7 +65,6 @@ function castVote() {
     };
     axios.post('/api/vote', data)
     .then(function (response) {
-        console.log('saved successfully');
         newuser = false;
     })
     .catch(function (error) {

@@ -17,7 +17,6 @@ function refreshUsers() {
 }
 
 onMount(() => {
-  console.log('mounting');
   pusher = new Pusher(PUBLIC_PUSHER_KEY, {
     cluster: 'us2'
   });

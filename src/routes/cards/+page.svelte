@@ -1,6 +1,6 @@
 <script>
-import { onMount } from 'svelte';
 import axios from 'axios';
+import { onMount } from 'svelte';
 
 let tags;
 
@@ -11,7 +11,6 @@ function refreshTags() {
 }
 
 onMount(() => {
-  console.log('mounting');
   refreshTags();
 });
 </script>

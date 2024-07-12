@@ -39,8 +39,6 @@ for(let i = 1;i <= total_tags_count;i++) {
 //Pusher.logToConsole = true;
 
 onMount(() => {
-console.log('onMount');
-
     tag = data.tag;
     total_tags_count = data.total_tags_count;
     tag_number = data.tag_number;
@@ -54,8 +52,6 @@ console.log('onMount');
     let tags_tapped_string = localStorage.getItem('tags_tapped');
     tags_tapped = tags_tapped_string ? JSON.parse(tags_tapped_string) : [];
 
-    console.log(['tapped',tags_tapped]);
-
     hunt = /hunt=/.test(document.location.search) ? document.location.search.replace(/^\?hunt=(.*)&.+/,'$1') : document.location.hostname;
     let hash_array = document.location.search.replace(/^\?(hunt=.*&)?/,'').split('/');
 
@@ -65,7 +61,6 @@ console.log('onMount');
     
     // set tag number
     tag_arg = hash_array.length > 1 ? atob(decodeURIComponent(hash_array[1])) : '';
-    console.log({tag,total_tags_count});
 
     if(tag_number > 0 && name) {
         store();
@@ -79,7 +74,7 @@ console.log('onMount');
 
     pusher_channel = pusher.subscribe(PUBLIC_PUSHER_CHANNEL);
     pusher_channel.bind(PUBLIC_PUSHER_EVENT, function(data) {
-      console.log(JSON.stringify(data));
+      //console.log(JSON.stringify(data));
     });
 });
 
@@ -92,7 +87,6 @@ function nextFact() {
 }
 
 function addCurrentTag() {
-    console.log('Checking if tag number ' + tag_number + ' has been tapped');
     if(!tags_tapped.includes(tag_number) && tag_number > 0) {
         tags_tapped.push(tag_number);
         tags_tapped = tags_tapped;
@@ -125,7 +119,6 @@ function store() {
     //let data_string = JSON.stringify(data);
     axios.post('/api/user', data)
     .then(function (response) {
-        console.log('saved successfully');
         if(opt_out) {
             opted_out = true;
         }
