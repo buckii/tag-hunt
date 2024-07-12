@@ -316,7 +316,7 @@ div.wrapper:after {
 }
 div.wrapper > .inner {
     min-height: 200px;
-    padding: 50px 0 70px;
+    padding: 50px 20px 70px;
 }
 footer .inner {
     color: #000;

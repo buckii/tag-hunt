@@ -1,4 +1,4 @@
-import { castVote } from "$lib/db/mysql";
+import { castVote, storeInDB } from "$lib/db/mysql";
 import { message } from '$lib/pusher';
 import { json } from '@sveltejs/kit';
 
@@ -14,7 +14,13 @@ export async function POST({ request }) {
     let option_value = atob(data.option_token);
     
     message('vote', data);
-    let result = castVote(user, vote_id, option_value);
+    if(data.newuser) {
+        // store in db
+        let result = await storeInDB(data);
+        message('user', data);
+    }
+
+    let result = await castVote(user, vote_id, option_value);
 
     return json(result);
 }

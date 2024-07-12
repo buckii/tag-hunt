@@ -8,13 +8,20 @@ export async function load({ params }) {
         // check that the decoded value is just an integer
         if(!/^\d+$/.test(vote_decoded)) {
             error(401, 'Invalid vote.');
-            return {};
+            return {error: 'Invalid vote.'};
         }
         let vote_number = parseInt(vote_decoded);
         let vote_data = await getVote(vote_number);
         let vote = vote_data?.vote;
         
         let option = atob(decodeURIComponent(params.option_token));
+        let valid_options = JSON.parse(vote.vote_options);
+
+        if(!valid_options.includes(option)) {
+            error(401, 'Invalid option.');
+            return {error: 'Invalid option.'};
+
+        }
 
 		return {
             vote,

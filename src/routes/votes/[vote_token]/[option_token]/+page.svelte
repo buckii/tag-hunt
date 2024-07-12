@@ -11,25 +11,32 @@ let pusher_channel;
 
 let vote;
 let option;
+let vote_token;
+let option_token;
+
+let newuser = false;
+
+let hunt;
+let name;
+let organization;
+let email;
 
 onMount(() => {
     vote = data.vote;
     option = data.option;
-    let vote_token = data.vote_token;
-    let option_token = data.option_token;
+    vote_token = data.vote_token;
+    option_token = data.option_token;
 
     //console.log(window.localStorage);
-    let name = localStorage.getItem('name') || '';
-    let organization = localStorage.getItem('organization') || '';
-    let email = localStorage.getItem('email') || '';
+    name = localStorage.getItem('name') || '';
+    organization = localStorage.getItem('organization') || '';
+    email = localStorage.getItem('email') || '';
 
-    axios.post('/api/vote', {
-        email,
-        name,
-        organization,
-        vote_token,
-        option_token,
-    })
+    newuser = !name;
+
+    if(!newuser) {
+        castVote();
+    }
 
     console.log({vote,option});
 
@@ -42,10 +49,58 @@ onMount(() => {
       console.log(JSON.stringify(data));
     });
 });
+
+function castVote() {
+
+    localStorage.setItem('hunt', hunt);
+    localStorage.setItem('name', name);
+    localStorage.setItem('organization', organization);
+    localStorage.setItem('email', email);
+
+    let data = {
+        hunt,
+        name,
+        organization,
+        email,
+        vote_token,
+        option_token,
+        newuser,
+    };
+    axios.post('/api/vote', data)
+    .then(function (response) {
+        console.log('saved successfully');
+        newuser = false;
+    })
+    .catch(function (error) {
+        console.log(error);
+    });
+}
 </script>
 
 <div class="wrapper">
 <div class="inner">
+{#if data.error}
+{data.error}
+{:else if newuser}
+    <div>You are about to vote for</div>
+    <div class="voted-option">{option}</div>
+    <div>as your {vote?.name}</div>
+    <br />
+    <p><strong>Enter your info below and start your quest!</strong></p>
+    <p>
+        <label for="name">First Name</label>
+        <input type="text" id="name" bind:value={name} placeholder="First Name" />
+    </p>
+    <p style="display: none;">
+        <label for="organization">Your Company / Organization</label>
+        <input type="text" id="organization" bind:value={organization} placeholder="Your Company / Organization" />
+    </p>
+    <p>
+        <label for="email">Email</label>
+        <input type="email" id="email" bind:value={email} placeholder="Email" />
+    </p>
+    <button on:click={castVote}>Cast My Vote!</button>
+{:else}
 <div class="voted">
     <div>You have voted for</div>
     <div class="voted-option">{option}</div>
@@ -54,6 +109,7 @@ onMount(() => {
 <div class="change-vote">
     To change your vote, tap the card for a different option.
 </div>
+{/if}
 </div>
 </div>
 
