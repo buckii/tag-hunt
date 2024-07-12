@@ -39,6 +39,7 @@ CREATE TABLE `questions` (
   `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
   `hunt_id` bigint(20) unsigned NOT NULL,
   `question_text` text DEFAULT NULL,
+  `order` int DEFAULT 0,
   `created_at` datetime DEFAULT NULL,
   `updated_at` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
@@ -61,6 +62,29 @@ CREATE TABLE `hunts` (
   `name` varchar(255) DEFAULT NULL,
   `short_name` varchar(255) DEFAULT NULL,
   `domain` varchar(255) DEFAULT NULL,
+  `created_at` datetime DEFAULT NULL,
+  `updated_at` datetime DEFAULT NULL,
+  PRIMARY KEY (`id`)
+);
+
+CREATE TABLE `votes` (
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `hunt_id` bigint(20) unsigned NOT NULL,
+  `name` varchar(255) DEFAULT NULL,
+  `description` text DEFAULT NULL,
+  `voted_text` varchar(255) DEFAULT NULL,
+  `vote_options` json DEFAULT null,
+  `active` bool DEFAULT 1,
+  `created_at` datetime DEFAULT NULL,
+  `updated_at` datetime DEFAULT NULL,
+  PRIMARY KEY (`id`)
+);
+
+CREATE TABLE `user_votes` (
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `user_id` bigint(20) unsigned NOT NULL,
+  `vote_id` bigint(20) unsigned NOT NULL,
+  `value` varchar(255) NULL,
   `created_at` datetime DEFAULT NULL,
   `updated_at` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)

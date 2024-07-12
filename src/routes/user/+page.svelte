@@ -1,12 +1,12 @@
 <script>
-import { onMount } from 'svelte';
-import Pusher from 'pusher-js';
-import { PUBLIC_PUSHER_KEY, PUBLIC_PUSHER_CHANNEL, PUBLIC_PUSHER_EVENT } from "$env/static/public";
+import { PUBLIC_PUSHER_CHANNEL, PUBLIC_PUSHER_KEY } from "$env/static/public";
 import axios from 'axios';
+import Pusher from 'pusher-js';
+import { onMount } from 'svelte';
 
 let pusher;
 let pusher_channel;
-Pusher.logToConsole = true;
+//Pusher.logToConsole = true;
 
 let users;
 

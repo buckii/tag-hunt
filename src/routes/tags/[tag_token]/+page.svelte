@@ -36,7 +36,7 @@ for(let i = 1;i <= total_tags_count;i++) {
     tag_list.push(i);
 }
 
-Pusher.logToConsole = true;
+//Pusher.logToConsole = true;
 
 onMount(() => {
 console.log('onMount');

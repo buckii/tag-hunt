@@ -136,6 +136,90 @@ export async function storeInDB(data) {
   }
 }
 
+export async function castVote(user, vote_id, option_value) {
+  let mysqlconn = await mysqlconnFn();
+  let results = {};
+
+  let vote = await getVote(vote_id);
+  let hunt = await lookupHunt(vote.hunt_id);
+
+  try {
+    if(!/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(user.email)) {
+      return 'Invalid email';
+    }
+
+    // upsert user
+    await mysqlconn
+      .query("SELECT id FROM users where email='" + user.email + "'"
+        + " and hunt_id = " + hunt.id + ";")
+      .then(function ([rows, fields]) {
+        if(rows && rows.length) {
+          user.id = rows[0].id;
+        }
+      });
+
+    if(!user.id) {
+      await mysqlconn
+        .query("INSERT INTO users(hunt_id,email,created_at) "
+          + "VALUES(" + hunt.id + ",'" + user.email + "',now());")
+        .then(function ([rows, fields]) {
+          user.id = rows.insertId;
+          results.newuser = true;
+        });
+    }
+
+    if(!user.id) {
+      mysqlconn.end();
+      return 'Insert failed';
+    }
+
+    await mysqlconn
+      .query("UPDATE users SET "
+        + "name='" + user.name + "'"
+        + ",organization='" + user.organization + "'"
+        + ",updated_at=now() WHERE id='" + user.id + "';"
+      )
+      .then(function ([rows, fields]) {
+      });
+
+    //upsert user_votes
+    let user_vote_id = null;
+    await mysqlconn
+      .query("SELECT id FROM user_votes where user_id='" + user.id + "' AND vote_id='" + vote_id + "';")
+      .then(function ([rows, fields]) {
+        if(rows && rows.length) {
+          user_vote_id = rows[0].id;
+        }
+      });
+
+    if(!user_vote_id) {
+      await mysqlconn
+        .query("INSERT INTO user_votes(user_id,vote_id,value,created_at) VALUES('"
+          + user.id + "','" + vote_id + "','" + option_value + "',now());")
+        .then(function ([rows, fields]) {
+          user_vote_id = rows.insertId;
+        });
+    } else {
+      await mysqlconn
+        .query("UPDATE user_votes SET value='" + option_value + "',updated_at=now() WHERE id=" + user_vote_id + ";")
+        .then(function ([rows, fields]) {
+          //id = rows.rows[0].id;
+        });
+
+    }
+
+    mysqlconn.end();
+
+    return {
+      data: results,
+    };
+  } catch (error) {
+    console.error("Got an error!!!");
+    console.log(error);
+    return error;
+  }
+}
+
 export async function getAllUsers(hunt_name) {
   let mysqlconn = await mysqlconnFn();
   let results;
@@ -184,6 +268,32 @@ export async function getTags(hunt_name) {
 
   return {
     tags,
+  };
+}
+
+export async function getVotes(hunt_name) {
+  let mysqlconn = await mysqlconnFn();
+  let votes = [];
+
+  let hunt = await lookupHunt(hunt_name);
+
+  try {
+    await mysqlconn
+      .query("SELECT v.* "
+       + "FROM votes AS v "
+       + "WHERE v.hunt_id=" + hunt.id + " "
+       + "ORDER BY id;")
+      .then(function ([rows, fields]) {
+        votes = rows;
+      });
+  } catch (error) {
+    console.error("Got an error getting votes!");
+    console.log(error);
+  }
+  mysqlconn.end();
+
+  return {
+    votes,
   };
 }
 
@@ -238,6 +348,35 @@ export async function getTag(tag_number) {
   return {
     tag,
     total_tags_count,
+  };
+}
+
+export async function getVote(vote_number) {
+  let mysqlconn = await mysqlconnFn();
+  let vote;
+
+  vote_number = parseInt(vote_number);
+
+  try {
+    await mysqlconn
+      .query("SELECT * "
+       + "FROM votes AS v "
+       + "WHERE v.id=" + vote_number + ";")
+      .then(function ([rows, fields]) {
+        if(rows.length) {
+          vote = rows[0];
+        } else {
+          vote = null;
+        }
+      });
+  } catch (error) {
+    console.error("Got an error retrieving the vote!");
+    console.log(error);
+  }
+  mysqlconn.end();
+
+  return {
+    vote,
   };
 }
 
